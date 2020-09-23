@@ -166,8 +166,45 @@ public class client extends Thread{
     }//End listen()
     
     /*
-    Method 
+    Method that executes instructions according to the message that the client gets from the server
+    @param list
     */
+    
+    public void execute(LinkedList<String> list){
+        // 0 - First element on a list is the type 
+        String type = list.get(0);
+        switch(type){
+            case "CONNECTION_ACCEPTED":
+                // 1 - ID of the new user 
+                // 2 ... n //IDs of the clients currently online 
+                ID = list.get(1);
+                windowClient.initializedSession(ID);
+                for (int i = 2; i < list.size(); i++) {
+                    windowClient.addContact(list.get(i));
+                }//End for
+                break;
+            case "NEW_USER_CONNECTED":
+                // 1 - ID of the user that just connected
+                windowClient.addContact(list.get(1));
+                break;
+            case "DISCONNECTED_USER":
+                // 1 - ID of the user that just connected
+                windowClient.deleteContact(list.get(1));
+                break;
+            case "MESSAGE":
+                // 1 - sender 
+                // 2 - receiver 
+                // 3 - message 
+                windowClient.addMessage(list.get(1),list.get(3));
+                break;
+            default:
+                break;
+      
+        }//End switch
+    }//End execute()
+    
+    
+    
     
     
     
