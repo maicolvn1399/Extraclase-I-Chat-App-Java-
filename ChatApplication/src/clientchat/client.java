@@ -111,6 +111,65 @@ public class client extends Thread{
         
     }//End disconnect()
     
+    /*
+    Method to send a message to some other client to the server 
+    @param receiving_client
+    @param message 
+    */
+    public void sendMessage(String receiving_client, String message){
+        LinkedList<String> list = new LinkedList<>();
+        //Type
+        list.add("MESSAGE");
+        //sender 
+        list.add(ID);
+        //receiving client 
+        list.add(receiving_client);
+        //Message to send
+        list.add(message);
+        
+        try{
+            objectOutputStream.writeObject(list);
+            
+        }catch(IOException ex){
+            System.out.println("Writing or reading error when trying to send the message to the server");
+        }//End catch
+    }//End sendMessage()
+    
+    /*
+    Method that listens to the server 
+    */
+    public void listen(){
+        try{
+            while(listening){
+                Object aux = objectInputStream.readObject();
+                if(aux != null){
+                    if(aux instanceof LinkedList){
+                        execute((LinkedList<String>)aux);
+                    }else{
+                        System.err.println("An unknown object has been sent to the socket");
+                    }
+                    
+                }else{
+                    System.err.println("A null has been received through the socket");
+                }//End else
+                
+                
+            }//End while
+            
+        }catch(Exception e ){
+            JOptionPane.showMessageDialog(window, "The connection with the server has been lost\n"
+                    + "This chat will end"
+                    + "The will shut down");
+            System.exit(0);
+            
+        }//End catch
+    }//End listen()
+    
+    /*
+    Method 
+    */
+    
+    
     
     
     
