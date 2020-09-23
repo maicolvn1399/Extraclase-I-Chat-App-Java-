@@ -203,6 +203,31 @@ public class client extends Thread{
         }//End switch
     }//End execute()
     
+    /*
+    Method that makes the server ask for permission in order to add the new client to the list of clients
+    @param ID
+    
+    */
+    
+    private void sendConnectionRequest(String ID){
+       LinkedList<String> list = new LinkedList<>();
+       //type 
+       list.add("CONNECTION_REQUEST");
+       // requesting client 
+       list.add(ID);
+       try{
+           objectOutputStream.writeObject(list);
+       }catch(IOException ex){
+           System.out.println("Error reading and writing message to the server");
+       }//End catch
+    }//End sendConnectionRequest()
+    
+    
+    /*
+    When 
+    
+    
+    */
     
     
     
