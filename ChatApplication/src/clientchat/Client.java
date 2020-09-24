@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author Michael Valverde 
  */
-public class client extends Thread{
+public class Client extends Thread{
     
     /*
     *Socket used to communicate with the server
@@ -224,10 +224,34 @@ public class client extends Thread{
     
     
     /*
-    When 
-    
-    
+    When the client window is closed, the server has 
+    to be notified that some client has disconnected
+    so it can delete that client from the clients list 
+    and all the other remaining clients can delete that client 
+
     */
+    
+    void confirmDisconnection(){
+        LinkedList<String> list = new LinkedList<>();
+        //type 
+        list.add("DISCONNECTION_REQUEST");
+        //Requesting client 
+        list.add(ID);
+        try{
+            objectOutputStream.writeObject(list);
+        }catch(IOException ex){
+            System.out.println("Error reading and writing message to the server");
+        }//End catch
+    }//End confirmDisconnection()
+    
+    /*
+    Method that returns the ID of the client 
+    */
+    
+    String getID(){
+        return ID;
+    }//End getID()
+    
     
     
     
