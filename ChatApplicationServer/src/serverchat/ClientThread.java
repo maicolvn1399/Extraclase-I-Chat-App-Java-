@@ -181,6 +181,32 @@ public class ClientThread extends Thread{
             
                   
         }//End confirmConnection
+        
+        /**
+         * Method that returns the ID of the client
+         * @return 
+         */
+        public String getID(){
+            return ID;
+        }//End getID()
+        
+        /**
+         * Method that invokes when the user wants to leave the chat, if this happen, it has to 
+         * inform the rest of the users that they cannot send messages to that client
+         */
+        private void confirmDisconnection(){
+            LinkedList<String> auxList = new LinkedList<>();
+            auxList.add("USER_DISCONNECTED");
+            auxList.add(this.ID);
+            server.addLog("\nThe client \""+this.ID+"\" has disconnected");
+            this.disconnect();
+            for(int i = 0; i<server.clients.size();i++){
+                if(server.clients.get(i).equals(this)){
+                    server.clients.remove(i);
+                    break;
+                }//End if 
+            }//End for 
+        }//End confirmDisconnection()
                 
                 
 }//End class 
