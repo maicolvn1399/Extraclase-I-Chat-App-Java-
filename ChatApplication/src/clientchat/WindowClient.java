@@ -1,5 +1,6 @@
-/*
- GUI for the users who send the messages
+/**
+ * 
+ * GUI for the users who send the messages
  */
 package clientchat;
 
