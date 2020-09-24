@@ -111,10 +111,10 @@ public class Client extends Thread{
         
     }//End disconnect()
     
-    /*
-    Method to send a message to some other client to the server 
-    @param receiving_client
-    @param message 
+    /**
+    *Method to send a message to some other client to the server 
+    *@param receiving_client
+    *@param message 
     */
     public void sendMessage(String receiving_client, String message){
         LinkedList<String> list = new LinkedList<>();
@@ -253,16 +253,6 @@ public class Client extends Thread{
     }//End getID()
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
 }//End client class
