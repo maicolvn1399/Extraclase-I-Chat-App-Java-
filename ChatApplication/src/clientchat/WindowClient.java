@@ -44,8 +44,8 @@ public class WindowClient extends javax.swing.JFrame {
         convers_txt = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         cmb_contacts = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        msg_textfield = new javax.swing.JTextField();
+        btn_send = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,7 +64,12 @@ public class WindowClient extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Send");
+        btn_send.setText("Send");
+        btn_send.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_sendActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -84,9 +89,9 @@ public class WindowClient extends javax.swing.JFrame {
                         .addGap(72, 72, 72))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(msg_textfield, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_send, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(26, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -100,8 +105,8 @@ public class WindowClient extends javax.swing.JFrame {
                     .addComponent(cmb_contacts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
+                    .addComponent(msg_textfield)
+                    .addComponent(btn_send, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
@@ -112,6 +117,28 @@ public class WindowClient extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmb_contactsActionPerformed
 
+    private void btn_sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sendActionPerformed
+        // TODO add your handling code here:
+        //if there is no more clients on the chat 
+        if(cmb_contacts.getSelectedItem()==null){
+            JOptionPane.showMessageDialog(this, "You have to select a valid user, if there's no valid user \n"
+                    + "wait until someone else connects to the app");
+            return;
+            
+        }//End if 
+        String receiving_client = cmb_contacts.getSelectedItem().toString();
+        String message = msg_textfield.getText();
+        client.sendMessage(receiving_client, message);
+        //Adds the message to the text area to see the whole conversation 
+        convers_txt.append("## Me -> "+receiving_client + " ## : \n"+message+"\n");
+        msg_textfield.setText("");
+        
+    }//GEN-LAST:event_btn_sendActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt){
+        client.confirmDisconnection();
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -148,12 +175,12 @@ public class WindowClient extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_send;
     private javax.swing.JComboBox<String> cmb_contacts;
     private javax.swing.JTextArea convers_txt;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField msg_textfield;
     // End of variables declaration//GEN-END:variables
 
     /*
