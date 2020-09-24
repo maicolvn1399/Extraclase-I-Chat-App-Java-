@@ -54,8 +54,8 @@ public class Client extends Thread{
     @param name
     */
     
-    Client(WindowClient window,String host, Int port, String name){
-        //this.window = window;
+    Client(WindowClient window,String host, int port, String name){
+        this.windowClient = windowClient;
         this.host = host;
         this.port = port;
         this.ID = name;
@@ -157,7 +157,7 @@ public class Client extends Thread{
             }//End while
             
         }catch(Exception e ){
-            JOptionPane.showMessageDialog(window, "The connection with the server has been lost\n"
+            JOptionPane.showMessageDialog(windowClient, "The connection with the server has been lost\n"
                     + "This chat will end"
                     + "The will shut down");
             System.exit(0);

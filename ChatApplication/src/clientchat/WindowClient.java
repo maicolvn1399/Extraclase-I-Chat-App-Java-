@@ -4,7 +4,6 @@
 package clientchat;
 
 import java.awt.GridLayout;
-import javax.swing.JApplet;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -238,12 +237,19 @@ public class WindowClient extends javax.swing.JFrame {
     }//End getIP_port_name()
     
     
-    
-    
-    
-    
-
-
+    /***
+     * Method that deletes some client of the list of contacts, 
+     * this is run for when an user logs off 
+     * @param ID
+     */
+    void deleteContact(String ID){
+        for(int i = 0; i < cmb_contacts.getItemCount();i++){
+            if(cmb_contacts.getItemAt(i).toString().equals(ID)){
+                cmb_contacts.removeItemAt(i);
+                return;
+            }//End if
+        }//End for 
+    }//End deleteContact()
 
 }//End class WindowClient
 
