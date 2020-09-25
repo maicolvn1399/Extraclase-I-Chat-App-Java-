@@ -100,7 +100,7 @@ public class Client extends Thread{
         }catch(IOException ex){
             JOptionPane.showMessageDialog(window, "Input/Output error, you may not have entered a valid IP\n"
                     + "or you entered a invalid port\n"
-                    + "The server may not be running"
+                    + "The server may not be running\n"
                     + "This app will shut down");
             
             System.exit(0);
@@ -161,7 +161,7 @@ public class Client extends Thread{
                         execute((LinkedList<String>)aux);
                     }else{
                         System.err.println("An unknown object has been sent to the socket");
-                    }//Ebd else
+                    }//End else
                     
                 }else{
                     System.err.println("A null has been received through the socket");
@@ -213,7 +213,6 @@ public class Client extends Thread{
                 break;
             default:
                 break;
-      
         }//End switch
     }//End execute()
     

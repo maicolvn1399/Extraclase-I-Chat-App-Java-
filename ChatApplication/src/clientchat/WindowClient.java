@@ -49,6 +49,11 @@ public class WindowClient extends javax.swing.JFrame {
         btn_send = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         convers_txt.setColumns(20);
         convers_txt.setRows(5);
@@ -135,9 +140,12 @@ public class WindowClient extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btn_sendActionPerformed
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt){
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
         client.confirmDisconnection();
-    }
+    }//GEN-LAST:event_formWindowClosed
+
+   
     
     /**
      * @param args the command line arguments

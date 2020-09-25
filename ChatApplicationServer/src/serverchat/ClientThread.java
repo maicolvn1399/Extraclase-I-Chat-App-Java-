@@ -83,7 +83,7 @@ public class ClientThread extends Thread{
     }//End disconnect()
         
         /**
-         * Overwrite of the Thread, here's where the infinite cycle is assembled
+         * Overwrite of the Thread method, here's where the infinite cycle is assembled
          */
         public void run(){
             try{
@@ -101,11 +101,11 @@ public class ClientThread extends Thread{
             listening = true;
             while(listening){
                 try{
-                    Object aux = objectInputStream.readObject();
+                    Object aux=objectInputStream.readObject();
                     if(aux instanceof LinkedList){
                         execute((LinkedList<String>)aux);
                     }//End if 
-                }catch(Exception ex){
+                }catch(Exception e){
                     System.err.println("Error, the object sent by the client could not be read");
                 }//End catch
             }//End while
