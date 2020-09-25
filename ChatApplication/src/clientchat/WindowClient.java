@@ -183,27 +183,26 @@ public class WindowClient extends javax.swing.JFrame {
     private javax.swing.JTextField msg_textfield;
     // End of variables declaration//GEN-END:variables
 
-    /*
-    Constant to store the default port number 
+    /**
+    *Constant to store the default port number 
     */
     private final String DEFAULT_PORT = "10101";
     
-    /*
-    Constsnt to store the default IP address 
+    /**
+    *Constsnt to store the default IP address 
     */
     private final String DEFAULT_IP = "127.0.0.1";
     
-    /*
-    Constant to store the client
+    /**
+    *Constant to store the client
     */
     private final Client client;
     
     
-    /*
-    Adds contacts to the combobox
-    @param contact
+    /**
+    *Adds contacts to the combobox
+    *@param contact
     */
-    
     void addContact(String contact){
         cmb_contacts.addItem(contact);
     }//End addContact()
@@ -213,9 +212,8 @@ public class WindowClient extends javax.swing.JFrame {
      * @param sender 
      * @param message
      */
-
     void addMessage(String sender, String message){
-        convers_txt.append("******* "+sender + " ******* : \n"+message+"\n");
+        convers_txt.append("##### "+sender + " ##### : \n"+message+"\n");
     }//End addMessage()
     
     /**

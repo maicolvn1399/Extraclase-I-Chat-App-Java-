@@ -30,34 +30,46 @@ public class Client extends Thread{
     */
     private ObjectOutputStream objectOutputStream;
     
-    //Stream for receiving messages from the server or client
+    /**
+     * Stream for receiving messages from the server or client
+     */
     private ObjectInputStream objectInputStream;
     
-    //Window used as GUI for the client 
-    private WindowClient windowClient;
+    /**
+     * Window used as GUI for the client 
+     */
+    private WindowClient window;
     
-    //ID to identify the client inside the chat
+    /**
+     * ID to identify the client inside the chat
+     */
     private String ID;
     
-    //Variable used to determine if the client is listening or not to the server, it runs once the thread with the client starts
+    /**
+     * Variable used to determine if the client is listening or not to the server, it runs once the thread with the client starts
+     */ 
     private boolean listening;
     
-    //Variable that stores the IP of the host of the server 
+    /**
+     * Variable that stores the IP of the host of the server 
+     */
     private String host;
     
-    // variable that stores the port in which the server listens to the clients
+    /**
+     * variable that stores the port in which the server listens to the clients
+     */
     private int port;
     
-    /*
-    Class Constructor
-    @param window
-    @param host 
-    @param port
-    @param name
+    /**
+    * Class Constructor
+    * @param window
+    * @param host 
+    * @param port
+    * @param name
     */
     
     Client(WindowClient window,String host, int port, String name){
-        this.windowClient = window;
+        this.window = window;
         this.host = host;
         this.port = port;
         this.ID = name;
@@ -66,9 +78,8 @@ public class Client extends Thread{
         
     }//End class constructor 
     
-    /*
-    Method to run the thread of communication of the client's side
-    
+    /**
+    * Method to run the thread of communication of the client's side
     */
     
     public void run(){
@@ -82,12 +93,12 @@ public class Client extends Thread{
             
             
         }catch(UnknownHostException ex){
-            JOptionPane.showMessageDialog(windowClient, "Server unknown, you may not have entered a valid IP\n"
+            JOptionPane.showMessageDialog(window, "Server unknown, you may not have entered a valid IP\n"
                     + "or the server is not running \n"
                     + "This app will shut down");
             System.exit(0);
         }catch(IOException ex){
-            JOptionPane.showMessageDialog(windowClient, "Input/Output error, you may not have entered a valid IP\n"
+            JOptionPane.showMessageDialog(window, "Input/Output error, you may not have entered a valid IP\n"
                     + "or you entered a invalid port\n"
                     + "The server may not be running"
                     + "This app will shut down");
@@ -97,8 +108,8 @@ public class Client extends Thread{
         }//End catch
     }//End run()
     
-    /*
-    Method that closes the socket and the streams of communication
+    /**
+    *Method that closes the socket and the streams of communication
     */
     public void disconnect(){
         try{
@@ -137,8 +148,8 @@ public class Client extends Thread{
         }//End catch
     }//End sendMessage()
     
-    /*
-    Method that listens to the server 
+    /**
+    *Method that listens to the server 
     */
     public void listen(){
         try{
@@ -146,10 +157,11 @@ public class Client extends Thread{
                 Object aux = objectInputStream.readObject();
                 if(aux != null){
                     if(aux instanceof LinkedList){
+                        //if a linkedList is received then this method is executed
                         execute((LinkedList<String>)aux);
                     }else{
                         System.err.println("An unknown object has been sent to the socket");
-                    }
+                    }//Ebd else
                     
                 }else{
                     System.err.println("A null has been received through the socket");
@@ -159,17 +171,17 @@ public class Client extends Thread{
             }//End while
             
         }catch(Exception e ){
-            JOptionPane.showMessageDialog(windowClient, "The connection with the server has been lost\n"
-                    + "This chat will end"
+            JOptionPane.showMessageDialog(window, "The connection with the server has been lost\n"
+                    + "This chat will end\n"
                     + "The will shut down");
             System.exit(0);
             
         }//End catch
     }//End listen()
     
-    /*
-    Method that executes instructions according to the message that the client gets from the server
-    @param list
+    /**
+    *Method that executes instructions according to the message that the client gets from the server
+    *@param list
     */
     
     public void execute(LinkedList<String> list){
@@ -180,24 +192,24 @@ public class Client extends Thread{
                 // 1 - ID of the new user 
                 // 2 ... n //IDs of the clients currently online 
                 ID = list.get(1);
-                windowClient.initializedSession(ID);
+                window.initializedSession(ID);
                 for (int i = 2; i < list.size(); i++) {
-                    windowClient.addContact(list.get(i));
+                    window.addContact(list.get(i));
                 }//End for
                 break;
             case "NEW_USER_CONNECTED":
                 // 1 - ID of the user that just connected
-                windowClient.addContact(list.get(1));
+                window.addContact(list.get(1));
                 break;
             case "DISCONNECTED_USER":
                 // 1 - ID of the user that just connected
-                windowClient.deleteContact(list.get(1));
+                window.deleteContact(list.get(1));
                 break;
             case "MESSAGE":
                 // 1 - sender 
                 // 2 - receiver 
                 // 3 - message 
-                windowClient.addMessage(list.get(1),list.get(3));
+                window.addMessage(list.get(1),list.get(3));
                 break;
             default:
                 break;
@@ -205,10 +217,10 @@ public class Client extends Thread{
         }//End switch
     }//End execute()
     
-    /*
-    Method that makes the server ask for permission in order to add the new client to the list of clients
-    @param ID
-    
+    /**
+    *Method that makes the server ask for permission in order to add the new client to the list of clients
+    *@param ID
+    *
     */
     
     private void sendConnectionRequest(String ID){
@@ -225,11 +237,11 @@ public class Client extends Thread{
     }//End sendConnectionRequest()
     
     
-    /*
-    When the client window is closed, the server has 
-    to be notified that some client has disconnected
-    so it can delete that client from the clients list 
-    and all the other remaining clients can delete that client 
+    /**
+    *When the client window is closed, the server has 
+    *to be notified that some client has disconnected
+    *so it can delete that client from the clients list 
+    *and all the other remaining clients can delete that client 
 
     */
     
@@ -246,10 +258,9 @@ public class Client extends Thread{
         }//End catch
     }//End confirmDisconnection()
     
-    /*
-    Method that returns the ID of the client 
+    /**
+    *Method that returns the ID of the client 
     */
-    
     String getID(){
         return ID;
     }//End getID()

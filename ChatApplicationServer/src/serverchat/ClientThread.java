@@ -66,7 +66,7 @@ public class ClientThread extends Thread{
         }catch(IOException ex){
             System.err.println("Error initializing objectOutputStream and the objectInputStream");
         }//End catch
-    }
+    }//End constructor 
         
         /**
          * Method in charge to close the socket that is communicating
@@ -89,7 +89,7 @@ public class ClientThread extends Thread{
             try{
                 listen();
             }catch(Exception ex){
-                System.out.println("");
+                System.out.println("Error while trying to call the readLine method of the client");
             }//End catch
             disconnect();
         }//End run()
@@ -169,7 +169,7 @@ public class ClientThread extends Thread{
             list.add(this.ID);
             list.addAll(server.getConnectedUsers());
             sendMessage(list);
-            server.addLog("NEW_USER_CONNECTED");
+            server.addLog("\nNEW_USER_CONNECTED: "+this.ID);
             //send all the clients the name of the new user connected except for the user himself
             LinkedList<String> auxList = new LinkedList<>();
             auxList.add("NEW_USER_CONNECTED");
@@ -196,7 +196,7 @@ public class ClientThread extends Thread{
          */
         private void confirmDisconnection(){
             LinkedList<String> auxList = new LinkedList<>();
-            auxList.add("USER_DISCONNECTED");
+            auxList.add("DISCONNECTED_USER");
             auxList.add(this.ID);
             server.addLog("\nThe client \""+this.ID+"\" has disconnected");
             this.disconnect();
@@ -206,6 +206,9 @@ public class ClientThread extends Thread{
                     break;
                 }//End if 
             }//End for 
+            server.clients
+                    .stream()
+                    .forEach(h -> h.sendMessage(auxList));
         }//End confirmDisconnection()
                 
                 
