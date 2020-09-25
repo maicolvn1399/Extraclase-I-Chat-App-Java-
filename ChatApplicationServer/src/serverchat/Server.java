@@ -94,7 +94,7 @@ public class Server extends Thread{
         return connectedUsers;
     }//End getConnectedUsers()
     
-    /**
+    /*
      * Method that adds a line to the log of the GUI of the server 
      * @param text 
      */
