@@ -20,13 +20,13 @@ import javax.swing.JOptionPane;
  */
 public class Client extends Thread{
     
-    /*
+    /**
     *Socket used to communicate with the server
     */
     private Socket socket;
     
-    /*
-    Stream for sending messages to the server
+    /**
+    *Stream for sending messages to the server
     */
     private ObjectOutputStream objectOutputStream;
     
@@ -57,7 +57,7 @@ public class Client extends Thread{
     */
     
     Client(WindowClient window,String host, int port, String name){
-        this.windowClient = windowClient;
+        this.windowClient = window;
         this.host = host;
         this.port = port;
         this.ID = name;
@@ -77,21 +77,21 @@ public class Client extends Thread{
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             objectInputStream = new ObjectInputStream(socket.getInputStream());
             System.out.println("Successfull connection");
-            //this.sendConnectionRequest(ID);
-            //this.listen();
+            this.sendConnectionRequest(ID);
+            this.listen();
             
             
         }catch(UnknownHostException ex){
-            //JOptionPane.showMessageDialog(window, "Server unknown, you may not have entered a valid IP\n"
-                    //+ "or the server is not running \n"
-                    //+ "This app will shut down");
+            JOptionPane.showMessageDialog(windowClient, "Server unknown, you may not have entered a valid IP\n"
+                    + "or the server is not running \n"
+                    + "This app will shut down");
             System.exit(0);
         }catch(IOException ex){
-           /* JOptionPane.showMessageDialog(window, "Input/Output error, you may not have entered a valid IP\n"
+            JOptionPane.showMessageDialog(windowClient, "Input/Output error, you may not have entered a valid IP\n"
                     + "or you entered a invalid port\n"
                     + "The server may not be running"
                     + "This app will shut down");
-            */
+            
             System.exit(0);
             
         }//End catch
